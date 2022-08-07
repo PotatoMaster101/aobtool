@@ -7,7 +7,14 @@ var countCmd = new Command("count", "AOB counter");
 countCmd.AddArgument(countArg);
 countCmd.SetHandler(aob =>
 {
-    Console.WriteLine(CommandHandler.HandleCount(aob));
+    try
+    {
+        Console.WriteLine(CommandHandler.HandleCount(aob));
+    }
+    catch (ArgumentException ex)
+    {
+        Console.Error.WriteLine($"Argument error: {ex.Message}");
+    }
 }, countArg);
 
 // format
@@ -16,7 +23,14 @@ var formatCmd = new Command("format", "AOB formatter");
 formatCmd.AddArgument(formatArg);
 formatCmd.SetHandler(aob =>
 {
-    Console.WriteLine(CommandHandler.HandleFormat(aob));
+    try
+    {
+        Console.WriteLine(CommandHandler.HandleFormat(aob));
+    }
+    catch (ArgumentException ex)
+    {
+        Console.Error.WriteLine($"Argument error: {ex.Message}");
+    }
 }, formatArg);
 
 // diff
@@ -35,19 +49,30 @@ diffCmd.SetHandler((filename, wildcard, stdin) =>
     if (string.IsNullOrEmpty(wildcard))
         wildcard = "?";
 
-    var lines = new List<string>();
-    if (string.IsNullOrEmpty(filename))
-        stdin = true;
-    else
-        lines.AddRange(File.ReadAllLines(filename));
-
-    if (stdin)
+    try
     {
-        Console.WriteLine("Reading AOB from stdin...");
-        lines.AddRange(CommandHandler.ReadStdin());
-    }
+        var lines = new List<string>();
+        if (string.IsNullOrEmpty(filename))
+            stdin = true;
+        else
+            lines.AddRange(File.ReadAllLines(filename));
 
-    Console.WriteLine(CommandHandler.HandleDiff(lines, wildcard[0]));
+        if (stdin)
+        {
+            Console.WriteLine("Reading AOB from stdin...");
+            lines.AddRange(CommandHandler.ReadStdin());
+        }
+
+        Console.WriteLine(CommandHandler.HandleDiff(lines, wildcard[0]));
+    }
+    catch (ArgumentException ex)
+    {
+        Console.Error.WriteLine($"Argument error: {ex.Message}");
+    }
+    catch (IOException)
+    {
+        Console.Error.WriteLine($"File error: {filename}");
+    }
 }, diffFileOpt, diffWildcardOpt, diffStdinOpt);
 
 // root
