@@ -29,7 +29,7 @@ $ aobtool format 7458FCFF03
 ### AOB Diff
 Performs diff between multiple AOBs in a file, 1 AOB per line.
 ```
-$ aobtool diff <aob file> [--wildcard <wildcard character>]
+$ aobtool diff [--file <aob file>] [--wildcard <wildcard character>] [--stdin]
 ```
 
 Example:

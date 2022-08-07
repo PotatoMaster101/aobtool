@@ -20,18 +20,35 @@ formatCmd.SetHandler(aob =>
 }, formatArg);
 
 // diff
-var diffArg = new Argument<string>("filename", "Compares AOB difference");
-var diffOpt = new Option<string>("--wildcard", "Wildcard character");
-diffOpt.AddAlias("-w");
-diffOpt.SetDefaultValue('?');
+var diffWildcardOpt = new Option<string>("--wildcard", "Wildcard character") { IsRequired = false };
+diffWildcardOpt.AddAlias("-w");
+var diffFileOpt = new Option<string>("--file", "AOB diff file, 1 AOB per line") { IsRequired = false };
+diffFileOpt.AddAlias("-f");
+var diffStdinOpt = new Option<bool>("--stdin", "Read AOB from stdin, empty line to stop") { IsRequired = false };
 
 var diffCmd = new Command("diff", "AOB difference");
-diffCmd.AddArgument(diffArg);
-diffCmd.AddOption(diffOpt);
-diffCmd.SetHandler((filename, wildcard) =>
+diffCmd.AddOption(diffFileOpt);
+diffCmd.AddOption(diffWildcardOpt);
+diffCmd.AddOption(diffStdinOpt);
+diffCmd.SetHandler((filename, wildcard, stdin) =>
 {
-    Console.WriteLine(CommandHandler.HandleDiff(File.ReadAllLines(filename), wildcard[0]));
-}, diffArg, diffOpt);
+    if (string.IsNullOrEmpty(wildcard))
+        wildcard = "?";
+
+    var lines = new List<string>();
+    if (string.IsNullOrEmpty(filename))
+        stdin = true;
+    else
+        lines.AddRange(File.ReadAllLines(filename));
+
+    if (stdin)
+    {
+        Console.WriteLine("Reading AOB from stdin...");
+        lines.AddRange(CommandHandler.ReadStdin());
+    }
+
+    Console.WriteLine(CommandHandler.HandleDiff(lines, wildcard[0]));
+}, diffFileOpt, diffWildcardOpt, diffStdinOpt);
 
 // root
 var rootCmd = new RootCommand("Small tool to help with AOB");

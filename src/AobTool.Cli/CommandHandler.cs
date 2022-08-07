@@ -42,4 +42,21 @@ public static class CommandHandler
             current = AobHelper.CompareAob(current, AobHelper.ParseAob(aob), wildcard);
         return string.Join(" ", current);
     }
+
+    /// <summary>
+    /// Reads strings from stdin.
+    /// </summary>
+    /// <returns>The input entered by user.</returns>
+    public static IEnumerable<string> ReadStdin()
+    {
+        var result = new List<string>();
+        var text = Console.ReadLine();
+
+        while (!string.IsNullOrEmpty(text))
+        {
+            result.Add(text);
+            text = Console.ReadLine();
+        }
+        return result;
+    }
 }
