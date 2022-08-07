@@ -50,12 +50,12 @@ public class ByteString
         if (byteString.Length == 1)
             byteString = '0' + byteString;
         if (byteString.Length != 2)
-            throw new ArgumentException(nameof(byteString.Length), nameof(byteString));
+            throw new ArgumentException($"Byte string has invalid length: {byteString}", nameof(byteString));
 
         if (IsHexOrWildcardChar(byteString[0]) && IsHexOrWildcardChar(byteString[1]))
             Value = byteString;
         else
-            throw new ArgumentException(string.Empty, nameof(byteString));
+            throw new ArgumentException($"Byte string contains invalid character: {byteString}", nameof(byteString));
     }
 
     /// <summary>
@@ -69,7 +69,7 @@ public class ByteString
     public ByteString(byte value, bool isFirstCharWildcard = false, bool isSecondCharWildcard = false, char wildcard = '?')
     {
         if (!ValidWildcards.Contains(wildcard))
-            throw new ArgumentException(nameof(ValidWildcards), nameof(wildcard));
+            throw new ArgumentException($"Wildcard {wildcard} is invalid", nameof(wildcard));
 
         var byteString = value.ToString("X2");
         if (isFirstCharWildcard)
@@ -89,7 +89,7 @@ public class ByteString
     public ByteString GetComparisonResult(ByteString another, char wildcard = '?')
     {
         if (!ValidWildcards.Contains(wildcard))
-            throw new ArgumentException(nameof(ValidWildcards), nameof(wildcard));
+            throw new ArgumentException($"Wildcard {wildcard} is invalid", nameof(wildcard));
 
         // get standard format string first so comparison will be easier
         var standardCurrent = GetStandardFormat(Value);
