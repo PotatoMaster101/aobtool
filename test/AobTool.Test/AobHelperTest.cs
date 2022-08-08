@@ -27,6 +27,7 @@ public class AobHelperTest
     [Theory]
     [InlineData(null)]
     [InlineData("")]
+    [InlineData("z")]
     public void ParseAob_ThrowsOnInvalidAob(string aob)
     {
         // assert

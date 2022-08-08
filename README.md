@@ -39,7 +39,7 @@ $ cat aob.txt
 75 49 CC FE 54 98 53 69 FF
 75 49 CC 0E 54 97 53 69 44
 75 49 CC FE 54 98 53 69 44 E0
-$ aobtool diff aob.txt
+$ aobtool diff -f aob.txt
 75 49 CC ?E 54 9? 53 69 ?? ??
 ```
 
