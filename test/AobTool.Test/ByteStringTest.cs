@@ -72,12 +72,14 @@ public class ByteStringTest
     [InlineData("?f", true)]
     [InlineData("*f", true)]
     [InlineData("xf", true)]
+    [InlineData("f?", false)]
+    [InlineData("f*", false)]
+    [InlineData("fx", false)]
     [InlineData("??", true)]
     [InlineData("**", true)]
     [InlineData("xx", true)]
     [InlineData("ff", false)]
     [InlineData("f", false)]
-    [InlineData("0x", false)]
     public void IsFirstCharWildcard_GetsCorrectValue(string byteString, bool expected)
     {
         // arrange
@@ -91,6 +93,9 @@ public class ByteStringTest
     }
 
     [Theory]
+    [InlineData("?f", false)]
+    [InlineData("*f", false)]
+    [InlineData("xf", false)]
     [InlineData("f?", true)]
     [InlineData("f*", true)]
     [InlineData("fx", true)]
@@ -99,7 +104,6 @@ public class ByteStringTest
     [InlineData("xx", true)]
     [InlineData("ff", false)]
     [InlineData("f", false)]
-    [InlineData("0x", true)]
     public void IsSecondCharWildcard_GetsCorrectValue(string byteString, bool expected)
     {
         // arrange
@@ -124,7 +128,6 @@ public class ByteStringTest
     [InlineData("xx", true)]
     [InlineData("ff", false)]
     [InlineData("f", false)]
-    [InlineData("0x", true)]
     public void HasWildcard_GetsCorrectValue(string byteString, bool expected)
     {
         // arrange
@@ -149,7 +152,6 @@ public class ByteStringTest
     [InlineData("xx", true)]
     [InlineData("ff", false)]
     [InlineData("f", false)]
-    [InlineData("0x", false)]
     public void AllWildcard_GetsCorrectValue(string byteString, bool expected)
     {
         // arrange
