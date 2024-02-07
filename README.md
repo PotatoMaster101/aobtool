@@ -54,3 +54,9 @@ Run unit tests using [`dotnet`](https://dotnet.microsoft.com/download):
 ```
 $ dotnet test
 ```
+
+## Publish
+Generate single executable:
+```
+$ dotnet publish -c Release
+```
