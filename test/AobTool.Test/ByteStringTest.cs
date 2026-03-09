@@ -31,10 +31,10 @@ public class ByteStringTest
     [InlineData("aaa")]
     [InlineData("g")]
     [InlineData("0xg")]
-    public void StringCtor_ThrowsOnInvalidString(string byteString)
+    public void StringCtor_ThrowsOnInvalidString(string? byteString)
     {
         // assert
-        Assert.Throws<ArgumentException>(() => new ByteString(byteString));
+        Assert.Throws<ArgumentException>(() => new ByteString(byteString!));
     }
 
     [Theory]

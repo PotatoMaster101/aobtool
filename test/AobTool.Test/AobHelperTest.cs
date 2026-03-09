@@ -28,10 +28,10 @@ public class AobHelperTest
     [InlineData(null)]
     [InlineData("")]
     [InlineData("z")]
-    public void ParseAob_ThrowsOnInvalidAob(string aob)
+    public void ParseAob_ThrowsOnInvalidAob(string? aob)
     {
         // assert
-        Assert.Throws<ArgumentException>(() => AobHelper.ParseAob(aob));
+        Assert.Throws<ArgumentException>(() => AobHelper.ParseAob(aob!));
     }
 
     [Theory]
