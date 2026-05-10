@@ -1,6 +1,8 @@
 # AOB Tool
 Small tool to help working with AOB when using [Cheat Engine](https://cheatengine.org/).
 
+**Note**: this tool is deprecated and the repository will be deleted soon. See the newer Rust implementation: [`sig`](https://github.com/PotatoMaster101/sig)
+
 ## Usage
 ### Count AOB Length
 Counts the byte array length.
